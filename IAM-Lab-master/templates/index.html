@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S3 Uploader</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <script>
+    function sendFile() {
+      let fd = new FormData();
+      let files = $('#file')[0].files;
+      fd.append('file', files[0]);
+      $.ajax({
+        url: '<your api endpoint>',
+        type: 'post',
+        data: fd,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          $('#successText').text(data);
+        },
+      });
+    }
+  </script>
+  <body>
+    <div class="navbar"></div>
+
+    <div class="container">
+      <h2>S3 Uploader</h2>
+
+      <div class="card" style="width: 400px">
+        <div class="card-body">
+          <!-- <form action="/upload" method="post" enctype="multipart/form-data"> -->
+          <form onsubmit="sendFile(); return false;" enctype="multipart/form-data">
+            <p class="card-text">Choose a file to upload it to AWS S3</p>
+            <input type="file" name="file" value="file" id="file" />
+            <hr />
+            <input type="submit" name="upload" class="btn btn-success" id="uploadBtn" />
+            <!-- {{msg}} -->
+            <span id="successText" style="margin-left: 10px"></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
